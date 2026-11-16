@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth — hear Earth. An Earth Information Jukebox</title>
+<meta name="description" content="A jukebox that turns light into sound: real-time sonification of NASA Earth Information Center imagery and of measured Earth and sky data, built for blind and low-vision listeners.">
+<meta name="theme-color" content="#070912">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/hearth.css">
+</head>
+<body>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-desc">
+  <div>
+    <h1 id="gate-title">Hearth <small>hear Earth</small></h1>
+    <p id="gate-desc">A jukebox that turns light into sound. Listen to NASA's Earth Information Center, to five vital signs of the planet from real measurements, and to the sky beyond it. Headphones recommended.</p>
+    <button id="begin" class="btn primary" autofocus>Begin</button>
+    <p class="hint">Press Enter to begin. The top row of the keyboard chooses a scene, E opens the Earth Information Center, Space pauses, N narrates, D speaks the data, L plays the legend, V switches the voice off and on, and question mark lists every key.</p>
+  </div>
+</div>
+
+<main class="app" id="app" hidden>
+  <header class="top">
+    <h1 class="brand">Hearth <small>hear Earth</small></h1>
+    <div class="topbtns">
+      <button class="btn" id="tourbtn" aria-pressed="false" aria-keyshortcuts="T">Tour</button>
+      <button class="btn" id="prefsbtn" aria-keyshortcuts="P">Preferences</button>
+      <button class="btn" id="helpbtn" aria-keyshortcuts="?">Keys and help</button>
+    </div>
+  </header>
+
+  <nav class="tracks" aria-label="Scenes" id="tracknav"></nav>
+
+  <section class="stage" aria-label="Listening">
+    <div class="ring" id="ring"><canvas id="viz3d" aria-hidden="true"></canvas><canvas id="viz2d" aria-hidden="true" hidden></canvas><p class="caption" id="caption" hidden></p></div>
+    <div class="controls">
+      <button class="btn primary" id="play" aria-keyshortcuts="Space">Pause</button>
+      <button class="btn" id="voicebtn" aria-pressed="true" aria-keyshortcuts="V">Voice on</button>
+      <button class="btn" id="narrate" aria-keyshortcuts="N">Narrate</button>
+      <button class="btn" id="describe" aria-keyshortcuts="D">Hear the data</button>
+      <button class="btn" id="legendbtn" aria-keyshortcuts="L">Legend</button>
+      <button class="btn" id="explorebtn" aria-pressed="false" aria-keyshortcuts="X" hidden>Explore</button>
+      <button class="btn" id="savebtn" aria-keyshortcuts="S">Save 60 s</button>
+      <label class="slider">Volume <input type="range" id="vol" min="0" max="100" value="80"></label>
+      <label class="slider">Space <input type="range" id="space" min="0" max="100" value="55" aria-label="Reverb depth"></label>
+    </div>
+    <p class="status" id="status" role="status"></p>
+    <div class="sr-only" aria-live="polite" id="live"></div>
+  </section>
+
+  <section class="now" aria-labelledby="np-title">
+    <h2 id="np-title">—</h2>
+    <p class="where" id="np-where"></p>
+    <p class="poem" id="np-poem"></p>
+    <div class="readout" id="np-readout" role="group" aria-label="Live measurements"></div>
+    <p class="mapping" id="np-mapping"></p>
+    <p class="source" id="np-source" hidden></p>
+    <div class="eictools" id="eictools" hidden>
+      <label class="block">Source
+        <select id="source"></select>
+      </label>
+      <div class="row" id="daterow" hidden>
+        <label>Date <input type="date" id="date"></label>
+        <button class="btn" id="loadsrc">Load this date</button>
+      </div>
+      <div class="row"><button class="btn" id="lapse" hidden>Hear twelve months</button></div>
+      <label class="block">Lens for the dataset
+        <select id="lens"></select>
+      </label>
+      <p class="lensdesc" id="lensdesc"></p>
+      <label class="drop" id="drop">Drop an image or video here, paste one, or choose a file<input type="file" id="file" accept="image/*,video/*"></label>
+      <div class="row">
+        <input type="url" id="url" placeholder="or paste a direct link to an image or video" aria-label="Link to an image or video">
+        <button class="btn" id="loadurl">Load link</button>
+      </div>
+      <p class="status" id="eicstatus" role="status"></p>
+      <p class="source">More to listen to: <a href="https://svs.gsfc.nasa.gov/gallery/earth-information-center/" target="_blank" rel="noopener">the EIC gallery at NASA's Scientific Visualization Studio</a>, all public domain. Download any still or video and drop it here.</p>
+    </div>
+  </section>
+
+  <details class="how">
+    <summary>How the sound is made</summary>
+    <p>Nothing here is a recording. Every scene is synthesised live in your browser from numbers: the pixels of an Earth Information Center frame, a temperature record, a wavelength, an orbit. Light is turned into pitch by dividing its frequency by 2<sup>40</sup>, which lowers it forty octaves into hearing range without changing the ratios between colours; slower vibrations, like the ringing of the Sun or of Earth's electromagnetic cavity, are raised by a whole number of octaves instead. On that scaffold a small set of instruments — long bowed pads, undamped bells, plucked strings, filtered noise, a low brass swell and a Shepard tone — is driven by the data.</p>
+    <p>Each scene explains its own mapping under the live measurements, and the Legend button plays each sound on its own with its meaning, the way a map has a key. The climate records are read by script from NASA GISS, NOAA and NSIDC, with the source and a checksum kept for each. Imagery fetched live is provided by NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS).</p>
+  </details>
+
+  <footer>Built for the 2026 NASA Space Apps Challenge, The Earth Information Jukebox. Open source; runs entirely in the browser; works offline once loaded.</footer>
+</main>
+
+<dialog id="prefs" aria-labelledby="prefs-title">
+  <h2 id="prefs-title">Preferences</h2>
+  <h3>Voice</h3>
+  <label><input type="checkbox" id="pVoice" checked> Speak at all</label>
+  <label><input type="checkbox" id="pAuto" checked> Narrate each scene when it starts</label>
+  <label><input type="checkbox" id="pData"> Speak the measurements after the narration</label>
+  <label>Voice <select id="pVoiceSel"><option value="">Browser default</option></select></label>
+  <label>Speed <input type="range" id="pRate" min="60" max="130" value="92" aria-valuetext="0.92 times normal speed"></label>
+  <h3>Sound</h3>
+  <label><input type="checkbox" id="pBinaural"> Binaural placement for headphones: sounds come from where they are</label>
+  <h3>Screen reader</h3>
+  <label><input type="checkbox" id="pAnnounce" checked> Announce scene changes to assistive technology</label>
+  <label><input type="checkbox" id="pCaptions" checked> Show the narration as text</label>
+  <h3>Picture</h3>
+  <fieldset><legend>Visuals</legend>
+    <label><input type="radio" name="visuals" value="3d" checked> 3D scene</label>
+    <label><input type="radio" name="visuals" value="ring"> Spectrum ring</label>
+    <label><input type="radio" name="visuals" value="off"> None</label>
+  </fieldset>
+  <fieldset><legend>Motion</legend>
+    <label><input type="radio" name="motion" value="auto" checked> Follow system</label>
+    <label><input type="radio" name="motion" value="reduced"> Reduced</label>
+    <label><input type="radio" name="motion" value="full"> Full</label>
+  </fieldset>
+  <fieldset><legend>Theme</legend>
+    <label><input type="radio" name="theme" value="auto" checked> Follow system</label>
+    <label><input type="radio" name="theme" value="night"> Night</label>
+    <label><input type="radio" name="theme" value="dawn"> Dawn</label>
+  </fieldset>
+  <h3>Touch</h3>
+  <label><input type="checkbox" id="pHaptics"> Vibrate on pulses, waves, strikes and cracks (phones that support it)</label>
+  <div class="actions"><button class="btn primary" id="prefsdone">Done</button></div>
+</dialog>
+
+<dialog id="help" aria-labelledby="help-title">
+  <h2 id="help-title">Keys and help</h2>
+  <table>
+    <tr><td><kbd>1</kbd> to <kbd>0</kbd>, <kbd>-</kbd>, <kbd>=</kbd></td><td>Choose a scene: the top row of the keyboard, left to right</td></tr>
+    <tr><td><kbd>E</kbd></td><td>Earth Information Center: NASA frames, live layers, or your own file</td></tr>
+    <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Previous or next scene</td></tr>
+    <tr><td><kbd>Space</kbd></td><td>Pause or play</td></tr>
+    <tr><td><kbd>N</kbd></td><td>Hear the narration for this scene</td></tr>
+    <tr><td><kbd>D</kbd></td><td>Hear the live measurements, how they became sound, and where they came from</td></tr>
+    <tr><td><kbd>L</kbd></td><td>Legend: each sound on its own, with its meaning</td></tr>
+    <tr><td><kbd>X</kbd></td><td>Explore a frame yourself: arrow keys move (Shift moves further), Enter says where you are, or drag a finger across the porthole</td></tr>
+    <tr><td><kbd>V</kbd></td><td>Voice off or on</td></tr>
+    <tr><td><kbd>S</kbd></td><td>Save sixty seconds of the current scene as a WAV file</td></tr>
+    <tr><td><kbd>T</kbd></td><td>Tour: move through every scene on its own</td></tr>
+    <tr><td><kbd>P</kbd></td><td>Preferences</td></tr>
+    <tr><td><kbd>Esc</kbd></td><td>Stop speaking; stop exploring; close this window</td></tr>
+  </table>
+  <h3>About</h3>
+  <p style="color:var(--muted);margin:0">Hearth was built for the 2026 NASA Space Apps Challenge, The Earth Information Jukebox. It is designed to be used without sight: everything is reachable from the keyboard, every scene can describe itself and its data aloud, and every number you hear is a real measurement. The address bar remembers the scene, source and preferences, so a link opens exactly where you were.</p>
+  <div class="actions"><button class="btn primary" id="helpdone">Done</button></div>
+</dialog>
+
+<div class="media-hold" id="mediahold" aria-hidden="true"></div>
+
+<script src="vendor/three.min.js"></script>
+<script src="src/core.js"></script>
+<script src="src/data.js"></script>
+<script src="src/sky.js"></script>
+<script src="src/frames.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/scenes.js"></script>
+<script src="src/eic.js"></script>
+<script src="src/visuals.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

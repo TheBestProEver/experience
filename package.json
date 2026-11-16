@@ -1,0 +1,24 @@
+{
+  "name": "hearth-earth-jukebox",
+  "version": "3.0.0",
+  "description": "Hearth: an Earth Information Jukebox. Real-time sonification of NASA Earth Information Center imagery and measured Earth and sky data, built for blind and low-vision listeners.",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "data": "node tools/build-data.mjs",
+    "data:online": "node tools/build-data.mjs --online",
+    "build": "node tools/build.mjs",
+    "test:unit": "node --test \"tests/unit/*.test.mjs\"",
+    "test:e2e": "node --test --test-concurrency=1 \"tests/e2e/*.test.mjs\"",
+    "test": "npm run test:unit && npm run build && npm run test:e2e",
+    "screenshots": "node tools/screenshots.mjs",
+    "playlist": "node tools/render-playlist.mjs",
+    "demo": "node tools/record-demo.mjs",
+    "serve": "node tools/serve.mjs"
+  },
+  "devDependencies": {
+    "@sparticuz/chromium": "^153.0.0",
+    "puppeteer-core": "^25.17.0"
+  }
+}

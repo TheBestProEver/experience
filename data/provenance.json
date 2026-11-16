@@ -1,0 +1,41 @@
+{
+ "built": "2026-11-16",
+ "gistemp": {
+  "measured": "NASA Goddard Institute for Space Studies, GISTEMP v4 (annual global mean, °C against 1951–1980)",
+  "via": "mirror (datahub.io datasets/global-temp)",
+  "url": "https://raw.githubusercontent.com/datasets/global-temp/main/data/annual.csv",
+  "retrieved": "2026-11-16",
+  "sha256": "68ac8e86aee9fd9d",
+  "file": "data/raw/gistemp_annual_mirror.csv"
+ },
+ "seaice": {
+  "measured": "NSIDC Sea Ice Index v4, daily Arctic sea-ice extent (million km²)",
+  "via": "mirror (github.com/eigenbeam/seaice-demo), numeric columns only",
+  "url": "https://raw.githubusercontent.com/eigenbeam/seaice-demo/HEAD/data/N_seaice_extent_daily.csv",
+  "retrieved": "2026-11-16",
+  "sha256": "c2e82e7d45edd919",
+  "file": "data/raw/nsidc_north_daily_extent.csv"
+ },
+ "co2": {
+  "measured": "NOAA Global Monitoring Laboratory, Mauna Loa monthly mean CO₂ (ppm)",
+  "via": "mirror (datahub.io datasets/co2-ppm)",
+  "url": "https://raw.githubusercontent.com/datasets/co2-ppm/main/data/co2-mm-mlo.csv",
+  "retrieved": "2026-11-16",
+  "sha256": "7de17cf66ec3c285",
+  "file": "data/raw/co2_mm_mlo_mirror.csv"
+ },
+ "sealevel": {
+  "measured": "US EPA Climate Change Indicators: global mean sea level (CSIRO tide gauges to 1992, NOAA satellite altimetry from 1993), mm above 1880",
+  "via": "mirror (datahub.io datasets/sea-level-rise)",
+  "url": "https://raw.githubusercontent.com/datasets/sea-level-rise/main/data/epa-sea-level.csv",
+  "retrieved": "2026-11-16",
+  "sha256": "f65bea986aca6a74",
+  "file": "data/raw/epa_sea_level.csv"
+ },
+ "sky": {
+  "measured": "ESA Hipparcos catalogue (V magnitude, ICRS position), stars to magnitude 4.8",
+  "via": "bright-star file shipped with NASA WorldWind (github.com/NASAWorldWind/WebWorldWind, images/stars.json)",
+  "sha256": "105f30e461243b6a",
+  "file": "data/raw/hipparcos_bright_worldwind.json"
+ }
+}

@@ -1,0 +1,2 @@
+{ "name": "Hearth — hear Earth", "short_name": "Hearth", "description": "An Earth Information Jukebox: NASA Earth data as sound, built for blind and low-vision listeners.", "start_url": "./", "display": "standalone", "background_color": "#070912", "theme_color": "#070912",
+  "icons": [ { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" } ] }

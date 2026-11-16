@@ -1,0 +1,18 @@
+{
+ "gistemp_annual_mirror.csv": {
+  "url": "https://raw.githubusercontent.com/datasets/global-temp/main/data/annual.csv",
+  "retrieved": "2026-11-16"
+ },
+ "co2_mm_mlo_mirror.csv": {
+  "url": "https://raw.githubusercontent.com/datasets/co2-ppm/main/data/co2-mm-mlo.csv",
+  "retrieved": "2026-11-16"
+ },
+ "nsidc_north_daily_extent.csv": {
+  "url": "https://raw.githubusercontent.com/eigenbeam/seaice-demo/HEAD/data/N_seaice_extent_daily.csv",
+  "retrieved": "2026-11-16"
+ },
+ "epa_sea_level.csv": {
+  "url": "https://raw.githubusercontent.com/datasets/sea-level-rise/main/data/epa-sea-level.csv",
+  "retrieved": "2026-11-16"
+ }
+}
